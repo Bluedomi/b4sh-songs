@@ -12,9 +12,17 @@
     li { margin: 0.5em 0; }
     a { text-decoration: none; color: #0066cc; }
     a:hover { text-decoration: underline; }
-    audio { display: block; margin-top: 0.3em; }
+<!--    audio { display: block; margin-top: 0.3em; }-->
+   audio {
+      display: block;
+      margin-top: 0.3em;
+      width: 100%;       /* occupe toute la largeur disponible */
+      max-width: 600px;  /* limite pour éviter qu’il soit trop large */
+      height: 40px;      /* hauteur indicative, selon navigateur */
+    }
     .qr { margin-top: 0.5em; }
     .qr-link { margin-top: 0.3em; font-size: 0.95em; }
+
   </style>
 </head>
 <body>
