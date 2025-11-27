@@ -2,145 +2,347 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>/B4SH 😎 Songs 🎶</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 2em; background: #f9f9f9; }
-    h1 { color: #333; }
-    h2 { margin-top: 1.5em; }
-    h3 { margin-top: 1em; color: #555; }
-    ul { list-style-type: none; padding: 0; }
-    li { margin: 0.5em 0; }
-    a { text-decoration: none; color: #0066cc; }
-    a:hover { text-decoration: underline; }
-<!--    audio { display: block; margin-top: 0.3em; }-->
-   audio {
-      display: block;
-      margin-top: 0.3em;
-      width: 100%;       /* occupe toute la largeur disponible */
-      max-width: 600px;  /* limite pour éviter qu’il soit trop large */
-      height: 40px;      /* hauteur indicative, selon navigateur */
-    }
-    .qr { margin-top: 0.5em; }
-    .qr-link { margin-top: 0.3em; font-size: 0.95em; }
-    .red-text {
-    color: red;
+    :root {
+      --primary-color: #0066cc;
+      --bg-color: #f4f4f9;
+      --card-bg: #ffffff;
+      --text-color: #333;
     }
 
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    /* En-tête */
+    header {
+      background-color: #fff;
+      padding: 2em 1em;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      margin-bottom: 2em;
+    }
+
+    h1 { margin: 0; color: #222; }
+    .intro { max-width: 600px; margin: 1em auto; color: #555; }
+
+    /* Conteneur Grille (Layout principal) */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1em;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2em;
+    }
+
+    /* Carte Chanson */
+    .song-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+      transition: transform 0.2s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .song-card:hover {
+      transform: translateY(-5px);
+    }
+
+    /* Image de la jaquette */
+    .cover-art {
+      width: 100%;
+<!--      width: 250px;-->
+      height: 250px; /* Hauteur fixe pour uniformiser */
+      object-fit: cover; /* L'image remplit la zone proprement */
+      background-color: #ddd; /* Gris si image manquante */
+    }
+
+    .card-content {
+      padding: 1.5em;
+      flex-grow: 1; 
+    }
+
+    h2 {
+      margin-top: 0;
+      font-size: 1.3em;
+      color: #222;
+      border-bottom: 2px solid #eee;
+      padding-bottom: 0.5em;
+      margin-bottom: 1em;
+    }
+
+    /* Audio Player Styling */
+    .audio-block { margin-bottom: 1.5em; }
+    .version-title { font-weight: bold; display: block; margin-bottom: 0.5em; font-size: 0.9em; color: #666; }
+    
+    audio {
+      width: 100%;
+      height: 40px;
+      margin-bottom: 0.5em;
+    }
+
+    a.download-link {
+      font-size: 0.85em;
+      color: var(--primary-color);
+      text-decoration: none;
+      display: inline-block;
+    }
+    a.download-link:hover { text-decoration: underline; }
+
+    /* Section Lyrics */
+    .lyrics-section {
+      margin-top: auto;
+      background: #fafafa;
+      padding: 1em;
+      border-top: 1px solid #eee;
+    }
+    
+    .lyrics-title {
+      font-size: 0.85em;
+      font-weight: bold;
+      color: #777;
+      margin-bottom: 0.5em;
+      display: block;
+      text-transform: uppercase;
+    }
+
+    .lyrics-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5em;
+    }
+
+    .lyric-tag {
+      background: #fff;
+      color: #555;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 0.75em;
+      text-decoration: none;
+      border: 1px solid #ccc;
+      transition: all 0.2s;
+    }
+    .lyric-tag:hover {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+
+    /* Section Téléchargement Global & Footer */
+    .global-download {
+      background: #fff;
+      max-width: 800px;
+      margin: 3em auto;
+      padding: 2em;
+      border-radius: 12px;
+      text-align: center;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    }
+
+    .qr-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 2em;
+      margin-top: 1em;
+    }
+    .qr-item { text-align: center; }
+    .qr-item img { border: 1px solid #eee; padding: 5px; border-radius: 8px; }
+
+    footer {
+      text-align: center;
+      padding: 2em;
+      background: #fff0f0; 
+      color: #c00;
+      margin-top: 2em;
+      border-top: 1px solid #ffcccc;
+    }
+    
+    /* Responsive adjustment */
+    @media (max-width: 600px) {
+      .container { grid-template-columns: 1fr; }
+    }
   </style>
 </head>
 <body>
-  <h1>/B4SH 😎 Songs 🎶</h1>
 
-<p>Bienvenue sur cette page d’accueil 😊</p>
-<p>Son objectif est de partager, en toute convivialité, quelques créations musicales modestes avec les amis.</p>
-<p>Vous pouvez les écouter directement en ligne ou les télécharger pour un usage personnel.</p>
-<p>Merci de noter que toute utilisation commerciale de ces chansons est strictement interdite.</p>
+  <header>
+    <h1>/B4SH 😎 Songs 🎶</h1>
+    <div class="intro">
+      <p>Bienvenue sur cette page d’accueil 😊</p>
+      <p>Son objectif est de partager, en toute convivialité, quelques créations musicales modestes avec les amis.</p>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <article class="song-card">
+      <img src="images/Le Saucisson Polisson (chez Mimi) - Version Lyon Sec.png" alt="Jaquette Saucisson" class="cover-art">
+      
+      <div class="card-content">
+        <h2>Le Saucisson Polisson (Chez Mimi)</h2>
+        
+        <div class="audio-block">
+          <span class="version-title">Version Rosette</span>
+          <audio controls>
+            <source src="audio/Le Saucisson Polisson (Chez Mimi) - v1 - Version Rosette.mp3" type="audio/mpeg">
+          </audio>
+          <a class="download-link" href="audio/Le Saucisson Polisson (Chez Mimi) - v1 - Version Rosette.mp3" download>📥 Télécharger Rosette</a>
+        </div>
+
+        <div class="audio-block">
+          <span class="version-title">Version Lyon Sec</span>
+          <audio controls>
+            <source src="audio/Le Saucisson Polisson (Chez Mimi) - v2 - Version Lyon Sec.mp3" type="audio/mpeg">
+          </audio>
+          <a class="download-link" href="audio/Le Saucisson Polisson (Chez Mimi) - v2 - Version Lyon Sec.mp3" download>📥 Télécharger Lyon Sec</a>
+        </div>
+      </div>
+
+      <div class="lyrics-section">
+        <span class="lyrics-title">Paroles / Lyrics</span>
+        <div class="lyrics-tags">
+          <a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.md" class="lyric-tag">Markdown</a>
+          <a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.pdf" class="lyric-tag">PDF</a>
+          <a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.odt" class="lyric-tag">ODT</a>
+          <a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.epub" class="lyric-tag">EPUB</a>
+          <a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.txt" class="lyric-tag">TXT</a>
+        </div>
+      </div>
+    </article>
 
 
-  <!-- Le Saucisson Polisson -->
-  <h2>Le Saucisson Polisson (Chez Mimi)</h2>
-  <ul>
-    <li>
-      Version Rosette
-      <audio controls>
-        <source src="audio/Le Saucisson Polisson (Chez Mimi) - v1 - Version Rosette.mp3" type="audio/mpeg">
-        Votre navigateur ne supporte pas la lecture audio.
-      </audio>
-      <a href="audio/Le Saucisson Polisson (Chez Mimi) - v1 - Version Rosette.mp3" download>Télécharger</a>
-    </li>
-    <li>
-      Version Lyon Sec
-      <audio controls>
-        <source src="audio/Le Saucisson Polisson (Chez Mimi) - v2 - Version Lyon Sec.mp3" type="audio/mpeg">
-        Votre navigateur ne supporte pas la lecture audio.
-      </audio>
-      <a href="audio/Le Saucisson Polisson (Chez Mimi) - v2 - Version Lyon Sec.mp3" download>Télécharger</a>
-    </li>
-  </ul>
-  <h3>Lyrics</h3>
-  <ul>
-    <li><a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.md">Paroles (Markdown)</a></li>
-    <li><a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.pdf">Paroles (PDF)</a></li>
-    <li><a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.odt">Paroles (ODT)</a></li>
-    <li><a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.epub">Paroles (EPUB)</a></li>
-    <li><a href="lyrics/Le Saucisson Polisson (Chez Mimi) - lyrics - B4SH 😎.txt">Paroles (TXT)</a></li>
-  </ul>
+    <article class="song-card">
+       <img src="images/La Cérémonie de Ratification : Le Serment des Pieds Libres.jpg" alt="Jaquette Cérémonie" class="cover-art">
+      
+      <div class="card-content">
+        <h2>La Cérémonie de Ratification</h2>
+        <div class="audio-block">
+          <span class="version-title">Le Serment des Pieds Libres</span>
+          <audio controls>
+            <source src="audio/La Cérémonie de Ratification : Le Serment des Pieds Libres.mp3" type="audio/mpeg">
+          </audio>
+          <a class="download-link" href="audio/La Cérémonie de Ratification : Le Serment des Pieds Libres.mp3" download>📥 Télécharger</a>
+        </div>
+      </div>
 
-  <!-- La Cérémonie de Ratification -->
-  <h2>La Cérémonie de Ratification : Le Serment des Pieds Libres</h2>
-  <ul>
-    <li>
-      <audio controls>
-        <source src="audio/La Cérémonie de Ratification : Le Serment des Pieds Libres.mp3" type="audio/mpeg">
-        Votre navigateur ne supporte pas la lecture audio.
-      </audio>
-      <a href="audio/La Cérémonie de Ratification : Le Serment des Pieds Libres.mp3" download>Télécharger</a>
-    </li>
-  </ul>
-  <h3>Lyrics</h3>
-  <ul>
-    <li><a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.md">Paroles (Markdown)</a></li>
-    <li><a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.pdf">Paroles (PDF)</a></li>
-    <li><a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.odt">Paroles (ODT)</a></li>
-    <li><a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.epub">Paroles (EPUB)</a></li>
-    <li><a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.txt">Paroles (TXT)</a></li>
-  </ul>
+      <div class="lyrics-section">
+        <span class="lyrics-title">Paroles / Lyrics</span>
+        <div class="lyrics-tags">
+          <a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.md" class="lyric-tag">Markdown</a>
+          <a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.pdf" class="lyric-tag">PDF</a>
+          <a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.odt" class="lyric-tag">ODT</a>
+          <a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.epub" class="lyric-tag">EPUB</a>
+          <a href="lyrics/La Cérémonie de Ratification : Le Serment des Pieds Libres - lyrics - B4SH 😎.txt" class="lyric-tag">TXT</a>
+        </div>
+      </div>
+    </article>
 
-  <!-- La râpe à fromage -->
-  <h2>La râpe à fromage</h2>
-  <ul>
-    <li><audio controls><source src="audio/La râpe à fromage - v1.mp3" type="audio/mpeg"></audio><a href="audio/La râpe à fromage - v1.mp3" download>Télécharger v1</a></li>
-    <li><audio controls><source src="audio/La râpe à fromage - v2.mp3" type="audio/mpeg"></audio><a href="audio/La râpe à fromage - v2.mp3" download>Télécharger v2</a></li>
-    <li><audio controls><source src="audio/La râpe à fromage - v3.mp3" type="audio/mpeg"></audio><a href="audio/La râpe à fromage - v3.mp3" download>Télécharger v3</a></li>
-    <li><audio controls><source src="audio/La râpe à fromage - v4.mp3" type="audio/mpeg"></audio><a href="audio/La râpe à fromage - v4.mp3" download>Télécharger v4</a></li>
-  </ul>
-  <h3>Lyrics</h3>
-  <ul>
-    <li><a href="lyrics/La rape à fromage - lyrics - B4SH 😎.md">Paroles (Markdown)</a></li>
-    <li><a href="lyrics/La râpe à fromage - lyrics - B4SH 😎.pdf">Paroles (PDF)</a></li>
-    <li><a href="lyrics/La râpe à fromage - lyrics - B4SH 😎.odt">Paroles (ODT)</a></li>
-    <li><a href="lyrics/La râpe à fromage - lyrics - B4SH 😎.epub">Paroles (EPUB)</a></li>
-    <li><a href="lyrics/La râpe à fromage - lyrics - B4SH 😎.txt">Paroles (TXT)</a></li>
 
-  </ul>
+    <article class="song-card">
+       <img src="images/La râpe à fromage - version 4.png" alt="Jaquette Râpe à fromage" class="cover-art">
+      
+      <div class="card-content">
+        <h2>La râpe à fromage</h2>
+        
+        <div class="audio-block">
+          <span class="version-title">Version 4 (Finale)</span>
+          <audio controls><source src="audio/La râpe à fromage - v4.mp3" type="audio/mpeg"></audio>
+          <a class="download-link" href="audio/La râpe à fromage - v4.mp3" download>📥 Télécharger v4</a>
+        </div>
+        
+        <details>
+            <summary style="cursor:pointer; color:#666; font-size:0.9em; margin-bottom:10px;">Voir les anciennes versions (v1, v2, v3)</summary>
+            <div class="audio-block">
+                <span class="version-title">Version 1</span>
+                <audio controls><source src="audio/La râpe à fromage - v1.mp3" type="audio/mpeg"></audio>
+                <a class="download-link" href="audio/La râpe à fromage - v1.mp3" download>📥 Télécharger v1</a>
+            </div>
+            <div class="audio-block">
+                <span class="version-title">Version 2</span>
+                <audio controls><source src="audio/La râpe à fromage - v2.mp3" type="audio/mpeg"></audio>
+                <a class="download-link" href="audio/La râpe à fromage - v2.mp3" download>📥 Télécharger v2</a>
+            </div>
+             <div class="audio-block">
+                <span class="version-title">Version 3</span>
+                <audio controls><source src="audio/La râpe à fromage - v3.mp3" type="audio/mpeg"></audio>
+                <a class="download-link" href="audio/La râpe à fromage - v3.mp3" download>📥 Télécharger v3</a>
+            </div>
+        </details>
+      </div>
 
-  <!-- Tilapia Sauce Rumba -->
-  <h2>Tilapia Sauce Rumba</h2>
-  <ul>
-    <li><audio controls><source src="audio/Tilapia Sauce Rumba - version plantain - B4SH 😎.mp3" type="audio/mpeg"></audio><a href="audio/Tilapia Sauce Rumba - version plantain - B4SH 😎.mp3" download>Télécharger version plantain</a></li>
-    <li><audio controls><source src="audio/Tilapia Sauce Rumba - version saka saka - B4SH 😎.mp3" type="audio/mpeg"></audio><a href="audio/Tilapia Sauce Rumba - version saka saka - B4SH 😎.mp3" download>Télécharger version saka saka</a></li>
-  </ul>
-  <h3>Lyrics</h3>
-  <ul>
-    <li><a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.md">Paroles (Markdown)</a></li>
-    <li><a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.pdf">Paroles (PDF)</a></li>
-    <li><a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.odt">Paroles (ODT)</a></li>
-    <li><a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.epub">Paroles (EPUB)</a></li>
-    <li><a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.txt">Paroles (TXT)</a></li>
-  </ul>
+      <div class="lyrics-section">
+        <span class="lyrics-title">Paroles / Lyrics</span>
+        <div class="lyrics-tags">
+          <a href="lyrics/La rape à fromage - lyrics - B4SH 😎.md" class="lyric-tag">Markdown</a>
+          <a href="lyrics/La râpe à fromage - lyrics - B4SH 😎.pdf" class="lyric-tag">PDF</a>
+          <a href="lyrics/La râpe à fromage - lyrics - B4SH 😎.odt" class="lyric-tag">ODT</a>
+          <a href="lyrics/La râpe à fromage - lyrics - B4SH 😎.epub" class="lyric-tag">EPUB</a>
+          <a href="lyrics/La râpe à fromage - lyrics - B4SH 😎.txt" class="lyric-tag">TXT</a>
+        </div>
+      </div>
+    </article>
 
-  <!-- QR Codes -->
-  <h2>Télécharger TOUT (toutes les chansons et leurs paroles)</h2>
-  <p class="qr">
-    <img src="qr-b4sh-songs.png" alt="QR code vers le projet" width="150">
-  </p>
-  <p class="qr-link">
-    Lien direct : <a href="https://github.com/bluedomi/b4sh-songs/archive/refs/heads/main.zip">https://github.com/bluedomi/b4sh-songs/archive/refs/heads/main.zip</a>
-  </p>
 
-  <h2>Accès direct au site musical de /B4SH 😎 (cette page web)</h2>
-  <p class="qr">
-    <img src="qr-b4sh-songs-web.png" alt="QR vers le site musical" width="150">
-  </p>
-  <p class="qr-link">
-    Lien direct : <a href="https://bluedomi.github.io/b4sh-songs/">https://bluedomi.github.io/b4sh-songs/</a>
-  </p>
+    <article class="song-card">
+       <img src="images/Tilapia Sauce Rumba - version saka saka.jpg" alt="Jaquette Tilapia" class="cover-art">
+      
+      <div class="card-content">
+        <h2>Tilapia Sauce Rumba</h2>
+        
+        <div class="audio-block">
+          <span class="version-title">Version Plantain</span>
+          <audio controls><source src="audio/Tilapia Sauce Rumba - version plantain - B4SH 😎.mp3" type="audio/mpeg"></audio>
+          <a class="download-link" href="audio/Tilapia Sauce Rumba - version plantain - B4SH 😎.mp3" download>📥 Télécharger Plantain</a>
+        </div>
+        
+        <div class="audio-block">
+          <span class="version-title">Version Saka Saka</span>
+          <audio controls><source src="audio/Tilapia Sauce Rumba - version saka saka - B4SH 😎.mp3" type="audio/mpeg"></audio>
+          <a class="download-link" href="audio/Tilapia Sauce Rumba - version saka saka - B4SH 😎.mp3" download>📥 Télécharger Saka Saka</a>
+        </div>
+      </div>
 
-<h2 class="red-text">
-  Be aware that /B4SH 😎 is not Beethoven — these songs are made for fun!<br>
-  Enjoy the music, but please respect the non-commercial nature of these works.
-</h2>
+      <div class="lyrics-section">
+        <span class="lyrics-title">Paroles / Lyrics</span>
+        <div class="lyrics-tags">
+          <a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.md" class="lyric-tag">Markdown</a>
+          <a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.pdf" class="lyric-tag">PDF</a>
+          <a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.odt" class="lyric-tag">ODT</a>
+          <a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.epub" class="lyric-tag">EPUB</a>
+          <a href="lyrics/Tilapia Sauce Rumba - lyrics - B4SH 😎.txt" class="lyric-tag">TXT</a>
+        </div>
+      </div>
+    </article>
+
+  </div> <section class="global-download">
+    <h2>Téléchargements & Accès</h2>
+    <div class="qr-container">
+      <div class="qr-item">
+        <img src="qr-b4sh-songs.png" alt="QR Projet" width="240">
+        <p><a href="https://github.com/bluedomi/b4sh-songs/archive/refs/heads/main.zip">Tout télécharger (ZIP)</a></p>
+      </div>
+      <div class="qr-item">
+        <img src="qr-b4sh-songs-web.png" alt="QR Web" width="240">
+        <p><a href="https://bluedomi.github.io/b4sh-songs/">Site Web</a></p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <p><strong>Be aware that /B4SH 😎 is not Beethoven — these songs are made for fun!</strong><br>
+    Enjoy the music, but please respect the non-commercial nature of these works.</p>
+  </footer>
 
 </body>
 </html>
-
